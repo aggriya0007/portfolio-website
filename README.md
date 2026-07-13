@@ -2,7 +2,7 @@
 
 ## About
 
-This repository contains my personal portfolio website, created to showcase my projects, technical skills, education, certifications, and achievements.
+This repository contains my personal portfolio website, created to showcase my projects, technical skills, education and achievements.
 
 Although my primary interests are Artificial Intelligence, Machine Learning, and Data Analytics, I built this portfolio as a self-driven project to strengthen my web development fundamentals and establish a professional online presence.
 
