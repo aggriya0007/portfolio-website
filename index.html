@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aggriya Anand — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:            #0a0e13;
+    --bg-panel:      #10161d;
+    --bg-panel-2:    #141c25;
+    --line:          #1e2830;
+    --line-bright:   #26343f;
+    --teal:          #2fe6b8;
+    --teal-dim:      #1c8f74;
+    --copper:        #ff8a4c;
+    --text:          #e9eef3;
+    --muted:         #8b9aa8;
+    --muted-2:       #5d6c79;
+    --font-display:  'Space Grotesk', sans-serif;
+    --font-body:     'Inter', sans-serif;
+    --font-mono:     'JetBrains Mono', monospace;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  ::selection{ background:var(--teal); color:#04110d; }
+
+  a{ color:inherit; text-decoration:none; }
+
+  /* ---------- Circuit backdrop ---------- */
+  .circuit-bg{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:52px 52px;
+    opacity:.35;
+    mask-image:radial-gradient(circle at 50% 20%, black 0%, black 35%, transparent 78%);
+  }
+
+  .noise{
+    position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .container{
+    max-width:1120px; margin:0 auto; padding:0 32px; position:relative; z-index:2;
+  }
+
+  /* ---------- Nav ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    backdrop-filter:blur(10px);
+    background:rgba(10,14,19,.75);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    max-width:1120px; margin:0 auto; padding:18px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{
+    font-family:var(--font-mono); font-weight:700; font-size:15px; letter-spacing:.5px;
+    color:var(--text); display:flex; align-items:center; gap:8px;
+  }
+  .logo .dot{ width:8px; height:8px; border-radius:50%; background:var(--teal); box-shadow:0 0 10px var(--teal); animation:blink 2.4s infinite; }
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:.25;} }
+  .navlinks{ display:flex; gap:32px; font-family:var(--font-mono); font-size:13px; color:var(--muted); }
+  .navlinks a:hover{ color:var(--teal); }
+  @media(max-width:640px){ .navlinks{ display:none; } }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative; z-index:2;
+    min-height:100vh; display:flex; flex-direction:column; justify-content:center;
+    padding-top:120px; padding-bottom:80px;
+  }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:13px; color:var(--teal);
+    display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .eyebrow::before{ content:''; width:24px; height:1px; background:var(--teal); }
+  .terminal-line{
+    font-family:var(--font-mono); font-size:14px; color:var(--muted-2); margin-bottom:14px;
+  }
+  .terminal-line .cursor{
+    display:inline-block; width:8px; height:16px; background:var(--teal); margin-left:4px;
+    animation:blink 1s steps(1) infinite; vertical-align:middle;
+  }
+  h1.name{
+    font-family:var(--font-display); font-weight:700;
+    font-size:clamp(44px, 8vw, 92px); line-height:.98; letter-spacing:-.02em;
+    margin-bottom:22px;
+  }
+  h1.name span{
+    background:linear-gradient(120deg, var(--teal), #7ef7d9 60%, var(--copper));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .tagline{
+    font-size:19px; color:var(--muted); max-width:620px; margin-bottom:36px;
+  }
+  .tagline b{ color:var(--text); font-weight:600; }
+
+  .hero-cta{ display:flex; gap:16px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--font-mono); font-size:13px; padding:13px 24px; border-radius:6px;
+    display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line-bright);
+    transition:.2s ease; cursor:pointer;
+  }
+  .btn-primary{ background:var(--teal); color:#04120e; border-color:var(--teal); font-weight:700; }
+  .btn-primary:hover{ box-shadow:0 0 24px rgba(47,230,184,.4); transform:translateY(-2px); }
+  .btn-ghost{ color:var(--text); }
+  .btn-ghost:hover{ border-color:var(--teal); color:var(--teal); }
+
+  .hero-stats{
+    display:flex; gap:0; margin-top:70px; border-top:1px solid var(--line); padding-top:26px;
+    max-width:640px; flex-wrap:wrap;
+  }
+  .stat{ flex:1; min-width:140px; padding-right:24px; }
+  .stat .num{ font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--text); }
+  .stat .lab{ font-family:var(--font-mono); font-size:11.5px; color:var(--muted-2); text-transform:uppercase; letter-spacing:.06em; margin-top:4px;}
+
+  /* ---------- Section shared ---------- */
+  section{ position:relative; z-index:2; padding:110px 0; border-top:1px solid var(--line); }
+  .section-tag{
+    font-family:var(--font-mono); font-size:13px; color:var(--copper); margin-bottom:14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .section-tag::before{ content:''; width:24px; height:1px; background:var(--copper); }
+  h2.section-title{
+    font-family:var(--font-display); font-size:clamp(30px,4vw,44px); font-weight:600;
+    margin-bottom:46px; letter-spacing:-.01em;
+  }
+
+  /* ---------- About ---------- */
+  .about-grid{ display:grid; grid-template-columns:1.3fr 1fr; gap:64px; align-items:start; }
+  @media(max-width:840px){ .about-grid{ grid-template-columns:1fr; } }
+  .about-text p{ color:var(--muted); font-size:16.5px; margin-bottom:18px; }
+  .about-text p:first-child{ color:var(--text); font-size:19px; }
+  .about-text b{ color:var(--teal); font-weight:600; }
+
+  .info-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:10px; padding:26px;
+  }
+  .info-card h3{
+    font-family:var(--font-mono); font-size:12px; color:var(--muted-2); text-transform:uppercase;
+    letter-spacing:.08em; margin-bottom:18px; border-bottom:1px solid var(--line); padding-bottom:12px;
+  }
+  .info-row{ display:flex; justify-content:space-between; font-size:14px; margin-bottom:13px; }
+  .info-row .k{ color:var(--muted); }
+  .info-row .v{ color:var(--text); font-weight:500; text-align:right; }
+
+  .badge-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+  .badge{
+    font-family:var(--font-mono); font-size:11.5px; padding:6px 11px; border-radius:20px;
+    border:1px solid var(--line-bright); color:var(--muted);
+  }
+
+  /* ---------- Projects ---------- */
+  .project{
+    display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:center;
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:14px; overflow:hidden;
+    margin-bottom:36px;
+  }
+  .project:nth-child(even) .project-media{ order:2; }
+  @media(max-width:840px){
+    .project{ grid-template-columns:1fr; }
+    .project:nth-child(even) .project-media{ order:0; }
+  }
+  .project-media{
+    position:relative; min-height:280px; background:var(--bg-panel-2);
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+  }
+  .project-media img{ width:100%; height:100%; object-fit:cover; display:block; filter:saturate(1.05) contrast(1.03); }
+  .media-tag{
+    position:absolute; top:16px; left:16px; font-family:var(--font-mono); font-size:11px;
+    background:rgba(10,14,19,.75); border:1px solid var(--line-bright); color:var(--teal);
+    padding:5px 10px; border-radius:20px; backdrop-filter:blur(4px);
+  }
+  .project-body{ padding:38px 40px 38px 4px; }
+  .project:nth-child(even) .project-body{ padding:38px 4px 38px 40px; }
+  @media(max-width:840px){ .project-body{ padding:34px 30px !important; } }
+
+  .project-index{ font-family:var(--font-mono); font-size:12px; color:var(--muted-2); margin-bottom:10px; }
+  .project-body h3{ font-family:var(--font-display); font-size:26px; font-weight:600; margin-bottom:14px; }
+  .project-body p{ color:var(--muted); font-size:15px; margin-bottom:20px; }
+  .project-body p b{ color:var(--text); font-weight:600; }
+  .tool-tags{ display:flex; flex-wrap:wrap; gap:8px; }
+  .tool-tags span{
+    font-family:var(--font-mono); font-size:11px; padding:6px 10px; border-radius:6px;
+    background:rgba(47,230,184,.08); border:1px solid var(--teal-dim); color:var(--teal);
+  }
+
+  /* Drowsiness illustration (SVG, no image asset) */
+  .eye-illustration{ width:78%; max-width:280px; }
+
+  /* ---------- Skills ---------- */
+  .skills-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
+  @media(max-width:780px){ .skills-grid{ grid-template-columns:1fr; } }
+  .skill-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:12px; padding:26px;
+    transition:.2s;
+  }
+  .skill-card:hover{ border-color:var(--teal-dim); transform:translateY(-3px); }
+  .skill-card .icon{ color:var(--teal); margin-bottom:16px; }
+  .skill-card h4{ font-family:var(--font-display); font-size:17px; margin-bottom:10px; }
+  .skill-card p{ color:var(--muted); font-size:13.5px; }
+
+  /* ---------- Achievements ---------- */
+  .ach-list{ display:flex; flex-direction:column; gap:0; }
+  .ach-item{
+    display:grid; grid-template-columns:26px 1fr; gap:18px;
+    padding:22px 0; border-bottom:1px solid var(--line);
+  }
+  .ach-item:last-child{ border-bottom:none; }
+  .ach-item .marker{ width:10px; height:10px; margin-top:6px; border-radius:2px; background:var(--copper); transform:rotate(45deg); }
+  .ach-item h4{ font-family:var(--font-display); font-size:17px; margin-bottom:4px; }
+  .ach-item p{ color:var(--muted); font-size:14px; }
+
+  /* ---------- Contact ---------- */
+  .contact-wrap{ text-align:center; }
+  .contact-wrap p.lead{ color:var(--muted); font-size:17px; max-width:520px; margin:0 auto 44px; }
+  .social-row{ display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+  .social-btn{
+    display:flex; align-items:center; gap:12px; padding:16px 24px; border-radius:10px;
+    background:var(--bg-panel); border:1px solid var(--line); font-family:var(--font-mono);
+    font-size:14px; transition:.2s ease;
+  }
+  .social-btn:hover{ border-color:var(--teal); background:var(--bg-panel-2); transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,.35); }
+  .social-btn svg{ width:22px; height:22px; flex-shrink:0; }
+  .social-btn .lab-sm{ display:block; font-size:10px; color:var(--muted-2); text-transform:uppercase; letter-spacing:.06em; }
+  .social-btn .lab-big{ color:var(--text); font-weight:500; }
+
+  footer{
+    text-align:center; padding:36px 0; color:var(--muted-2); font-family:var(--font-mono); font-size:12px;
+    border-top:1px solid var(--line); position:relative; z-index:2;
+  }
+
+  @media(prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="circuit-bg"></div>
+<div class="noise"></div>
+
+<header>
+  <nav>
+    <div class="logo"><span class="dot"></span>AGGRIYA.DEV</div>
+    <div class="navlinks">
+      <a href="#about">about</a>
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+      <a href="#contact">contact</a>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" style="border-top:none;">
+  <div class="container">
+    <div class="terminal-line">&gt; whoami<span class="cursor"></span></div>
+    <div class="eyebrow">FINAL-YEAR ENGINEERING STUDENT — CSE, BIET LUCKNOW</div>
+    <h1 class="name">Aggriya<br><span>Anand</span></h1>
+    <p class="tagline">
+      I build things that sense, think and react — from a fire-fighting robot that reads flame
+      sensors on the fly, to a vision system that watches for drowsy drivers.
+      <b>AI/ML · Embedded Systems · Computer Vision.</b>
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#projects">View Projects →</a>
+      <a class="btn btn-ghost" href="Aggriya_Anand_Resume.pdf" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        Download Resume
+      </a>
+      <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat"><div class="num">2</div><div class="lab">Core Projects</div></div>
+      <div class="stat"><div class="num">3rd</div><div class="lab">Place · Tech Avinya 2.0</div></div>
+      <div class="stat"><div class="num">2027</div><div class="lab">Expected Graduation</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-tag">// 01 · about</div>
+    <h2 class="section-title">Who I am</h2>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a final-year engineering student pursuing a B.Tech in Computer Science at BIET, Lucknow,
+        with my hands equally comfortable on an Arduino breadboard and a Python notebook.</p>
+        <p>My work sits at the intersection of <b>embedded hardware</b> and <b>artificial intelligence</b> —
+        I like taking a real-world problem, whether it's a fire hazard or a drowsy driver, and building
+        a working sensor-to-decision pipeline around it, not just a proof of concept on paper.</p>
+        <p>Alongside robotics and computer vision, I'm currently deepening my knowledge of Machine
+        Learning and NLP, and I stay consistent outside the lab too — gym is non-negotiable.</p>
+      </div>
+
+      <div class="info-card">
+        <h3>Profile</h3>
+        <div class="info-row"><span class="k">Degree</span><span class="v">B.Tech, CSE</span></div>
+        <div class="info-row"><span class="k">Institute</span><span class="v">BIET, Lucknow</span></div>
+        <div class="info-row"><span class="k">Duration</span><span class="v">2023 – 2027</span></div>
+        <div class="info-row"><span class="k">Location</span><span class="v">Lucknow, India</span></div>
+        <div class="info-row"><span class="k">Focus</span><span class="v">AI/ML · Embedded C</span></div>
+        <div class="badge-row">
+          <span class="badge">Python</span>
+          <span class="badge">Embedded C</span>
+          <span class="badge">OpenCV</span>
+          <span class="badge">Arduino</span>
+          <span class="badge">MySQL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-tag">// 02 · projects</div>
+    <h2 class="section-title">Projects</h2>
+
+    <!-- Project 1 -->
+    <div class="project">
+      <div class="project-media">
+        <img src="robot.jpg" alt="Fire fighting robot built on Arduino Uno with flame sensors, motor driver, relay module and water pump" loading="lazy">
+        <span class="media-tag">● live build</span>
+      </div>
+      <div class="project-body">
+        <div class="project-index">PROJECT_01 / HARDWARE + EMBEDDED</div>
+        <h3>Fire Fighting Robot</h3>
+        <p>
+          A fully self-navigating rescue-bot built from the chassis up on an <b>Arduino Uno</b>.
+          Three flame sensors are mounted around the frame to continuously scan for a fire source;
+          the moment a flame is detected, the onboard logic steers the 4-wheel drive toward it and
+          triggers a relay-controlled water pump to extinguish it — no human operator required.
+        </p>
+        <p>
+          The control board runs a custom <b>Embedded C++</b> program that fuses sensor input with
+          motor-driver output in real time, while a dual-motor driver module and 18650 Li-ion cell
+          pack handle the drive train. It was as much an exercise in circuit design and power
+          management as it was in code — every wire on that board is hand-routed and hand-soldered.
+        </p>
+        <div class="tool-tags">
+          <span>IoT</span><span>Arduino Uno</span><span>Embedded C++</span>
+          <span>Flame Sensors</span><span>Relay Module</span><span>DC Motor Driver</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project">
+      <div class="project-media">
+        <svg class="eye-illustration" viewBox="0 0 300 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="300" height="220" fill="#141c25"/>
+          <path d="M20 110 Q150 30 280 110 Q150 190 20 110 Z" stroke="#2fe6b8" stroke-width="2.5" fill="none" opacity="0.9"/>
+          <circle cx="150" cy="110" r="34" stroke="#ff8a4c" stroke-width="2.5" fill="none"/>
+          <circle cx="150" cy="110" r="14" fill="#2fe6b8" opacity="0.85"/>
+          <g opacity="0.55" stroke="#5d6c79" stroke-width="1.4">
+            <line x1="45" y1="60" x2="45" y2="45"/>
+            <line x1="80" y1="45" x2="80" y2="30"/>
+            <line x1="220" y1="45" x2="220" y2="30"/>
+            <line x1="255" y1="60" x2="255" y2="45"/>
+          </g>
+          <g font-family="JetBrains Mono, monospace" font-size="10" fill="#8b9aa8">
+            <text x="30" y="200">EAR: 0.31</text>
+            <text x="120" y="200">STATUS: ALERT</text>
+            <text x="228" y="200">FPS: 27</text>
+          </g>
+        </svg>
+        <span class="media-tag">◆ EAR-based detection</span>
+      </div>
+      <div class="project-body">
+        <div class="project-index">PROJECT_02 / COMPUTER VISION + ML</div>
+        <h3>Driver Drowsiness Detection System</h3>
+        <p>
+          A real-time safety system built in <b>Python</b> that watches the road through the driver's
+          eyes — literally. Using <b>OpenCV</b> and <b>MediaPipe's</b> facial landmark model, it tracks
+          68 points on the driver's face frame-by-frame and computes the <b>Eye Aspect Ratio (EAR)</b>
+          to measure how open or closed the eyes are.
+        </p>
+        <p>
+          When the EAR drops below a calibrated threshold for a sustained number of frames — the
+          tell-tale sign of eyelids drifting shut — the system fires an audio alert instantly through
+          SoundAudio, giving the driver a critical second to react. It runs entirely on live video,
+          processing frames with NumPy for the numerical work behind the geometry.
+        </p>
+        <div class="tool-tags">
+          <span>Python</span><span>OpenCV</span><span>MediaPipe</span>
+          <span>NumPy</span><span>Facial Landmark Detection</span><span>Real-Time Video</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-tag">// 03 · toolkit</div>
+    <h2 class="section-title">Skills &amp; Tools</h2>
+
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h4>Programming</h4>
+        <p>Python for AI/ML pipelines and data work; Embedded C/C++ for microcontroller-level control on Arduino.</p>
+      </div>
+      <div class="skill-card">
+        <div class="icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 4v16"/></svg>
+        </div>
+        <h4>Databases</h4>
+        <p>MySQL for structured data storage, querying, and backing simple application logic.</p>
+      </div>
+      <div class="skill-card">
+        <div class="icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        </div>
+        <h4>Computer Vision &amp; ML</h4>
+        <p>OpenCV, MediaPipe, facial landmark tracking, EAR-based detection algorithms, and the fundamentals of applied ML.</p>
+      </div>
+      <div class="skill-card">
+        <div class="icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></svg>
+        </div>
+        <h4>Embedded Systems</h4>
+        <p>Arduino Uno platforms, motor drivers, relay modules, sensor integration and power management for autonomous hardware.</p>
+      </div>
+      <div class="skill-card">
+        <div class="icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h4>Data Structures &amp; Algorithms</h4>
+        <p>Core problem-solving foundations applied to writing efficient, reliable code across projects.</p>
+      </div>
+      <div class="skill-card">
+        <div class="icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 21H5a2 2 0 0 1-2-2v-4m6 6h10a2 2 0 0 0 2-2v-4"/></svg>
+        </div>
+        <h4>Dev Tools</h4>
+        <p>GitHub for version control, VS Code as a daily driver, and Arduino IDE for flashing embedded builds.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="container">
+    <div class="section-tag">// 04 · milestones</div>
+    <h2 class="section-title">Achievements &amp; Learning</h2>
+
+    <div class="ach-list">
+      <div class="ach-item">
+        <div class="marker"></div>
+        <div>
+          <h4>3rd Place — Idea Presentation, Tech Avinya 2.0</h4>
+          <p>Placed 3rd in the technical idea-presentation competition hosted by BIET's tech fest.</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <div class="marker"></div>
+        <div>
+          <h4>Seminar — Cybersecurity using Blockchain Technology</h4>
+          <p>Attended a blockchain-technology-sponsored seminar on "Enhancing Cybersecurity using Blockchain Technology" at Bansal Institute of Engineering & Technology, Lucknow.</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <div class="marker"></div>
+        <div>
+          <h4>Currently Learning</h4>
+          <p>Deepening my understanding of Machine Learning and Natural Language Processing, alongside consistent strength training at the gym.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container contact-wrap">
+    <div class="section-tag" style="justify-content:center;">// 05 · contact</div>
+    <h2 class="section-title">Let's build something</h2>
+    <p class="lead">Open to internships, collaborations, and conversations about robotics, computer vision or anything in between. Reach out on whichever channel suits you.</p>
+
+    <div style="margin-bottom:36px;">
+      <a class="btn btn-primary" href="Aggriya_Anand_Resume.pdf" target="_blank" rel="noopener" style="display:inline-flex;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        Download Full Resume (PDF)
+      </a>
+    </div>
+
+    <div class="social-row">
+      <a class="social-btn" href="https://github.com/aggriya0007" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.98 5.24.98 11.52c0 5.02 3.26 9.28 7.79 10.78.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.1-3.17.69-3.84-1.36-3.84-1.36-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.53-.29-5.19-1.27-5.19-5.63 0-1.24.44-2.26 1.18-3.05-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.16a10.9 10.9 0 0 1 5.73 0c2.18-1.47 3.14-1.16 3.14-1.16.63 1.58.24 2.75.12 3.04.73.79 1.17 1.81 1.17 3.05 0 4.37-2.66 5.34-5.2 5.62.41.36.77 1.07.77 2.15 0 1.56-.01 2.81-.01 3.19 0 .3.2.66.79.55A11.03 11.03 0 0 0 23 11.52C23 5.24 18.27.5 12 .5Z"/></svg>
+        <span><span class="lab-sm">GitHub</span><span class="lab-big">aggriya0007</span></span>
+      </a>
+
+      <a class="social-btn" href="https://www.linkedin.com/in/aggriya-anand-286a0926b" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg>
+        <span><span class="lab-sm">LinkedIn</span><span class="lab-big">Aggriya Anand</span></span>
+      </a>
+
+      <a class="social-btn" href="https://www.instagram.com/tech._core" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+        <span><span class="lab-sm">Instagram</span><span class="lab-big">tech._core</span></span>
+      </a>
+
+      <a class="social-btn" href="mailto:anand.bietlko@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 6 8 7 8-7"/></svg>
+        <span><span class="lab-sm">Email</span><span class="lab-big">anand.bietlko@gmail.com</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  designed &amp; built by Aggriya Anand · <span id="year"></span>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
