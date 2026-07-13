@@ -36,7 +36,7 @@ Although my primary interests are Artificial Intelligence, Machine Learning, and
 
 ## Live Demo
 
-The live portfolio link will be added after GitHub Pages deployment.
+https://aggriya0007.github.io/portfolio-website/
 
 ---
 
